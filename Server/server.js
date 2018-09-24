@@ -6,9 +6,11 @@ const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 const {authenticate} = require('./middleware/authenticate');
+const cors = require('cors');
 
 let app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 let port = process.env.PORT || 3000;
