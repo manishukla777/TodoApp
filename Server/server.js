@@ -8,21 +8,10 @@ const {User} = require('./models/user');
 const {authenticate} = require('./middleware/authenticate');
 const cors = require('cors');
 
-let app = express();
-
-//app.use(allowCrossDomain);
-    
-
-
+let app = express();    
 app.use(cors());
 app.use(bodyParser.json());
 
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Methods', 'GET,PATCH,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type,x-auth');
-
-    next();
-}
 
 let port = process.env.PORT || 3000;
 
@@ -116,6 +105,7 @@ app.patch('/todos/:id',authenticate,(req,res) => {
 
 
 app.post('/users',(req,res) => {
+    res.header('Access-Control-Expose-Headers', 'x-auth');
     let body = _.pick(req.body,['email','password']);
     let user = new User(body);
     user.save().then((user) => {
