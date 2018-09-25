@@ -10,8 +10,19 @@ const cors = require('cors');
 
 let app = express();
 
+//app.use(allowCrossDomain);
+    
+
+
 app.use(cors());
 app.use(bodyParser.json());
+
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Methods', 'GET,PATCH,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,x-auth');
+
+    next();
+}
 
 let port = process.env.PORT || 3000;
 
