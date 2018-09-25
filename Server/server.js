@@ -12,6 +12,10 @@ let app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use((req,res,next) => {
+    res.header('Access-Control-Expose-Headers', 'x-auth');
+    next();
+})
 
 let port = process.env.PORT || 3000;
 
@@ -105,7 +109,6 @@ app.patch('/todos/:id',authenticate,(req,res) => {
 
 
 app.post('/users',(req,res) => {
-    res.header('Access-Control-Expose-Headers', 'x-auth');
     let body = _.pick(req.body,['email','password']);
     let user = new User(body);
     user.save().then((user) => {
